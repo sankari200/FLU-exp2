@@ -1,0 +1,17 @@
+# University Research Lab Facilities
+
+A Flutter app displaying a list of research lab equipment with their prices and access request buttons.
+
+## Features
+- Clean card layout
+- INR currency formatting
+- Snackbar confirmation on button click
+- Asset images for lab equipment
+
+## Screenshots
+(Add your screenshots here)
+
+## Run Instructions
+```bash
+flutter pub get
+flutter run

@@ -1,0 +1,159 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'University Research Lab Facilities',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'University Research Lab Facilities',
+            style: TextStyle(fontSize: 18, letterSpacing: 1),
+          ),
+          backgroundColor: Colors.green[800],
+        ),
+        body: const LabFacilitiesList(),
+      ),
+    );
+  }
+}
+
+class LabFacilitiesList extends StatelessWidget {
+  const LabFacilitiesList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: const [
+        LabFacilityItem(
+          facilityName: 'High-Performance Microscope',
+          facilityPrice: 350000.00,
+          facilityImage: 'assets/images/microscope.jpg',
+        ),
+        LabFacilityItem(
+          facilityName: '3D Bioprinter',
+          facilityPrice: 1200000.00,
+          facilityImage: 'assets/images/bioprinter.jpg',
+        ),
+        LabFacilityItem(
+          facilityName: 'Chemical Analysis Kit',
+          facilityPrice: 85000.00,
+          facilityImage: 'assets/images/chemical_kit.jpg',
+        ),
+        LabFacilityItem(
+          facilityName: 'Robotics Research Station',
+          facilityPrice: 750000.00,
+          facilityImage: 'assets/images/robotics.jpg',
+        ),
+      ],
+    );
+  }
+}
+
+class LabFacilityItem extends StatelessWidget {
+  final String facilityName;
+  final String facilityImage;
+  final double facilityPrice;
+
+  const LabFacilityItem({
+    super.key,
+    required this.facilityName,
+    required this.facilityImage,
+    required this.facilityPrice,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final inrFormat = NumberFormat.currency(
+      locale: 'en_IN',
+      symbol: '₹',
+      decimalDigits: 2,
+    );
+
+    return Card(
+      margin: const EdgeInsets.all(10),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: const BorderSide(color: Colors.grey, width: 0.5),
+      ),
+      elevation: 1,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              color: Colors.grey[200],
+              width: 120,
+              height: 120,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  facilityImage,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    facilityName,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    softWrap: true,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    inrFormat.format(facilityPrice),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  ElevatedButton(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content:
+                              Text('Request sent for $facilityName access'),
+                          duration: const Duration(seconds: 2),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
+                    ),
+                    child: const Text(
+                      'Request Access',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
